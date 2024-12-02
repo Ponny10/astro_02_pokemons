@@ -1,16 +1,22 @@
 ---
 
+import MainLayout from "layouts/MainLayout.astro";
+import PokemonCard from "components/Pokemon/PokemonCard.astro";
+import type { Pokemons } from "interfaces/Pokemons";
+
+const resp = await fetch('https://pokeapi.co/api/v2/pokemon');
+const data = (await resp.json()) as Pokemons;
+
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<MainLayout title="Pokémons">
+  <h1 class="text-3xl font-bold p-5">Pokémons</h1>
+  <hr/>
+  <section aria-label="Listado de Pokémons" class="grid grid-cols-1 sm:grid-cols-5 md:grid-cols-5 gap-4 mt-5">
+    {
+      data.results.map((pokemon) => (
+        <PokemonCard name={pokemon.name} url={pokemon.url} />
+      ))
+    }
+  </section>
+</MainLayout>

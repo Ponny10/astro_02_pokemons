@@ -1,0 +1,46 @@
+---
+
+import type { GetStaticPaths } from "astro";
+
+import MainLayout from "layouts/MainLayout.astro";
+import type {Pokemon, Pokemons} from 'interfaces/Pokemons';
+import PokemonCard from "components/Pokemon/PokemonCard.astro";
+
+
+export const getStaticPaths = (async () => {
+
+	const resp = await fetch('https://pokeapi.co/api/v2/pokemon?limit=151');
+	const {results} = await resp.json() as Pokemons;
+
+	return results.map((pokemon: Pokemon) => {
+        const id = pokemon.url.split('/').at(-2);
+		return {
+			params: {
+		        id: id,
+		    },
+            props: {
+                name: pokemon.name,
+                url: pokemon.url,
+            }
+		} 
+	});
+
+}) satisfies GetStaticPaths;
+
+const {name, url} = Astro.props;
+
+---
+
+<MainLayout title={name.toLocaleUpperCase()}>
+	<section class="mt-10 mx-10 flex flex-col justify-center items-center">
+		<a href="/">{"<-Volver"}</a>
+		<h2 class="text-5xl mb-5 capitalize">{name}</h2>
+		<PokemonCard name={name} url={url} isBig />
+	</section>
+</MainLayout>
+
+<style>
+	a {
+		@apply hover:underline text-red-500;
+	}
+</style>
