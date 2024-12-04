@@ -3,8 +3,9 @@
 import type { GetStaticPaths } from "astro";
 
 import MainLayout from "layouts/MainLayout.astro";
-import type {Pokemon, Pokemons} from 'interfaces/Pokemons';
 import PokemonCard from "components/Pokemon/PokemonCard.astro";
+import Title from "components/shared/Title.astro";
+import type {Pokemon, Pokemons} from 'interfaces/Pokemons';
 
 
 export const getStaticPaths = (async () => {
@@ -31,10 +32,9 @@ const {name, url} = Astro.props;
 
 ---
 
-<MainLayout title={name.toLocaleUpperCase()}>
+<MainLayout title={name}>
 	<section class="mt-10 mx-10 flex flex-col justify-center items-center">
-		<a href="/">{"<-Volver"}</a>
-		<h2 class="text-5xl mb-5 capitalize">{name}</h2>
+		<button class="bg-red-500 px-4 py-2 rounded-[25px] mb-4" onclick="history.back()">{'<-- Volver'}</button>
 		<PokemonCard name={name} url={url} isBig />
 	</section>
 </MainLayout>

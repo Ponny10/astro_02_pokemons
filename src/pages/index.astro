@@ -2,6 +2,7 @@
 
 import MainLayout from "layouts/MainLayout.astro";
 import PokemonCard from "components/Pokemon/PokemonCard.astro";
+import Title from "components/shared/Title.astro";
 import type { Pokemons } from "interfaces/Pokemons";
 
 const resp = await fetch('https://pokeapi.co/api/v2/pokemon');
@@ -10,9 +11,8 @@ const data = (await resp.json()) as Pokemons;
 ---
 
 <MainLayout title="Pokémons">
-  <h1 class="text-3xl font-bold p-5">Pokémons</h1>
-  <hr/>
-  <section aria-label="Listado de Pokémons" class="grid grid-cols-1 sm:grid-cols-5 md:grid-cols-5 gap-4 mt-5">
+  <Title>Pokémons</Title>
+  <section aria-label="Listado de Pokémons" class="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-3 gap-4 mt-5">
     {
       data.results.map((pokemon) => (
         <PokemonCard name={pokemon.name} url={pokemon.url} />

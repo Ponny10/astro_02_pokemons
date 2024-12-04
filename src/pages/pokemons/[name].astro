@@ -3,6 +3,7 @@ import type { GetStaticPaths } from "astro";
 
 import MainLayout from "layouts/MainLayout.astro";
 import PokemonCard from "components/Pokemon/PokemonCard.astro";
+import Title from "components/shared/Title.astro";
 import type { Pokemon, Pokemons } from "../../interfaces/Pokemons";
 
 export const getStaticPaths = (async() => {
@@ -37,8 +38,8 @@ const imgSrc = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites
 	image={imgSrc}
 	>
 	<section class="mt-10 mx-10 flex flex-col justify-center items-center">
-		<a href="/">{"<-Volver"}</a>
-		<h2 class="text-5xl mb-5 capitalize">{name}</h2>
+		<button class="bg-red-500 px-4 py-2 rounded-[25px] mb-4" onclick="history.back()">{'<-- Volver'}</button>
+		<Title>{name}</Title>
 		<PokemonCard name={name} url={url} isBig />
 		<audio controls class="mt-5">
 			<source src={audio} type={'audio/ogg'} />
@@ -46,8 +47,3 @@ const imgSrc = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites
 	</section>
 </MainLayout>
 
-<style>
-	a {
-		@apply hover:underline text-red-500;
-	}
-</style>

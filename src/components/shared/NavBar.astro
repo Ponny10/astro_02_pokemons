@@ -1,0 +1,45 @@
+---
+
+const navOptions = [
+    {
+        href: '/',
+        id: 0,
+        text: 'Listado',
+    },
+    {
+        href: '/pokemons/1',
+        id: 1,
+        text: 'Páginado',
+    },
+    {
+        href: '/favorite',
+        id: 2,
+        text: 'Favoritos',
+    },
+];
+
+const {pathname} = Astro.url;
+
+---
+
+<!-- component -->
+<nav class="bg-white shadow dark:bg-gray-800">
+    <div class="container flex items-center justify-center p-6 mx-auto text-gray-600 capitalize dark:text-gray-300">
+        {
+            navOptions.map(({href, text}) => (
+                <div>
+                    <a href={href} class="text-gray-800 dark:text-gray-200 mx-1.5 sm:mx-6">
+                        {text}
+                    </a>
+                    {
+                        pathname === href ? (
+                            <div class="border-blue-500 border-b-2" />
+                        ) : (
+                            <div class="border-transparent border-b-2" />
+                        )
+                    }
+                </div>
+            ))
+        }
+    </div>
+</nav>
